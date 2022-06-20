@@ -7,6 +7,7 @@ lyle@digitalfoo.net
 Watches the output of a command in a
 scrollable curses window.
 """
+import atexit
 import curses
 import sys
 import random
@@ -29,6 +30,7 @@ class UnixWatchCommand:
     screen = None
 
     def __init__(self, command):
+        atexit.register(self.__close)
         self.stop = threading.Event()
         self.timer=threading.Thread(target=self.display)
         self.command = ' '.join(command)
@@ -163,7 +165,7 @@ class UnixWatchCommand:
         curses.endwin()
 
     # catch any weird termination situations
-    def __del__(self):
+    def __close(self):
         self.restoreScreen()
 
 
