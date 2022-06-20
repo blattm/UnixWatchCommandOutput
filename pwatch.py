@@ -59,9 +59,9 @@ class UnixWatchCommand:
                 self.displayScreen()
                 # get user command
                 c = self.screen.getch()
-                if c == curses.KEY_UP:
+                if c == curses.KEY_UP or c == ord("k"):
                     self.updown(self.UP)
-                elif c == curses.KEY_DOWN:
+                elif c == curses.KEY_DOWN or c == ord("j"):
                     self.updown(self.DOWN)
                 elif c == self.SPACE_KEY:
                     self.markLine()
