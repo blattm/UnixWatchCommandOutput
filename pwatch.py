@@ -63,6 +63,10 @@ class UnixWatchCommand:
                     self.updown(self.UP)
                 elif c == curses.KEY_DOWN or c == ord("j"):
                     self.updown(self.DOWN)
+                elif c == ord("g"):
+                    self.goTop()
+                elif c == ord("G"):
+                    self.goBottom()
                 elif c == self.SPACE_KEY:
                     self.markLine()
                 elif c == self.ESC_KEY:
@@ -120,6 +124,14 @@ class UnixWatchCommand:
             else:
                 self.screen.addstr(index, 0, line, curses.A_BOLD)
         self.screen.refresh()
+
+    def goTop(self):
+        self.topLineNum = 0
+        self.highlightLineNum = 0
+    
+    def goBottom(self):
+        self.topLineNum = max(self.nOutputLines - curses.LINES, 0)
+        self.highlightLineNum = min(self.nOutputLines - 1, curses.LINES - 1)
 
     # move highlight up/down one line
     def updown(self, increment):
